@@ -8,12 +8,13 @@ use crate::geometry::{Collider, InteractionGroups, PointProjection, RayIntersect
 use crate::math::{Rot, Vect};
 use crate::pipeline::{CollisionEvent, EventQueue};
 use bevy::prelude::{Entity, EventWriter, GlobalTransform, Query};
+#[cfg(feature = "debug-render")]
 use bevy::render::primitives::Aabb;
 
 use crate::dynamics::TransformInterpolation;
 use crate::plugin::configuration::{SimulationToRenderTime, TimestepMode};
 use crate::prelude::RapierRigidBodyHandle;
-#[cfg(feature = "dim2")]
+#[cfg(all(feature = "dim2", feature = "debug-render"))]
 use bevy::math::Vec3Swizzles;
 
 /// The Rapier context, containing all the state of the physics engine.
@@ -617,6 +618,7 @@ impl RapierContext {
     }
 
     /// Finds all entities of all the colliders with an AABB intersecting the given AABB.
+    #[cfg(feature="debug-render")]
     pub fn colliders_with_aabb_intersecting_aabb(
         &self,
         aabb: Aabb,
