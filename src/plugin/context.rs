@@ -93,6 +93,15 @@ impl Default for RapierContext {
 }
 
 impl RapierContext {
+    /// Reset rapier context
+    pub fn reset(&mut self) {
+         *self = RapierContext {
+            physics_scale: self.physics_scale,
+            event_handler: self.event_handler.take(),
+            ..Default::default()
+        }
+    }
+
     /// If the collider attached to `entity` is attached to a rigid-body, this
     /// returns the `Entity` containing that rigid-body.
     pub fn collider_parent(&self, entity: Entity) -> Option<Entity> {
